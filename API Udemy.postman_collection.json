@@ -1,0 +1,620 @@
+{
+	"info": {
+		"_postman_id": "f7f1f3d3-a4f5-46c7-b63c-d9193cd8cd2b",
+		"name": "API Udemy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Test Star Wars API",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ba5007fb-9be4-4e69-a52e-3e38198ea87e",
+						"exec": [
+							"//1. Корректный формат ответа",
+							"pm.test(\"Correct response format json\", function() {",
+							"    pm.response.to.have.jsonBody()",
+							"});",
+							"",
+							"//2. Проверка наличия всех полей ответа",
+							"pm.test(\"Are all expected fields in response\", function() {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"people\");",
+							"    pm.expect(jsonData).to.have.property(\"planets\");",
+							"    pm.expect(jsonData).to.have.property(\"films\");",
+							"    pm.expect(jsonData).to.have.property(\"species\");",
+							"    pm.expect(jsonData).to.have.property(\"vehicles\");",
+							"    pm.expect(jsonData).to.have.property(\"starships\");",
+							"});",
+							"",
+							"//3. Значения в ответах не null",
+							"pm.test(\"Are values not null\", function(){",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.people).not.equal(null);",
+							"    pm.expect(jsonData.planets).not.equal(null);",
+							"    pm.expect(jsonData.films).not.equal(null);",
+							"    pm.expect(jsonData.species).not.equal(null);",
+							"    pm.expect(jsonData.vehicles).not.equal(null);",
+							"    pm.expect(jsonData.starships).not.equal(null);",
+							"});",
+							"",
+							"//4. Значения в ответах непустые",
+							"pm.test(\"Are values not empty\", function(){",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.people).not.equal(\"\");",
+							"    pm.expect(jsonData.planets).not.equal(\"\");",
+							"    pm.expect(jsonData.films).not.equal(\"\");",
+							"    pm.expect(jsonData.species).not.equal(\"\");",
+							"    pm.expect(jsonData.vehicles).not.equal(\"\");",
+							"    pm.expect(jsonData.starships).not.equal(\"\");",
+							"});",
+							"",
+							"//5. Поля ответа содержат корректные значения",
+							"pm.test(\"Are values correct\", function(){",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.people).to.equal(\"https://swapi.co/api/people/\");",
+							"    pm.expect(jsonData.planets).to.equal(\"https://swapi.co/api/planets/\");",
+							"    pm.expect(jsonData.films).to.equal(\"https://swapi.co/api/films/\");",
+							"    pm.expect(jsonData.species).to.equal(\"https://swapi.co/api/species/\");",
+							"    pm.expect(jsonData.vehicles).to.equal(\"https://swapi.co/api/vehicles/\");",
+							"    pm.expect(jsonData.starships).to.equal(\"https://swapi.co/api/starships/\");",
+							"});",
+							"",
+							"//6. Проверка статус-кода",
+							"pm.test(\"Check status code\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//7. Проверка status message",
+							"pm.test(\"Check status message\", function(){",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"//8. Проверка времени ответа",
+							"pm.test(\"Check response time\", function(){",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"//9. Проверка наличия заголовка Content-Type ответа",
+							"pm.test(\"Check headers\", function(){",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"//10. Проверка значения заголовка \"Content-Type\"",
+							"pm.test(\"Check value of Conten-Type header\", function(){",
+							"    pm.response.to.be.header(\"Content-Type\", \"application/json\");",
+							"});",
+							"",
+							"//11. Проверка наличия cookie",
+							"pm.test(\"Check cookies\", function(){",
+							"    pm.cookies.has(\"__cfduid\");",
+							"});",
+							"",
+							"//12. Проверка значения cookies",
+							"pm.test(\"Cookie has value\", function(){",
+							"    try{",
+							"        var MY_COOKIE = pm.cookies.get(\"__cfduid\");",
+							"        console.log(MY_COOKIE);",
+							"    } catch(e){",
+							"        console.log(\"Some problem with cookie ->\" + e)",
+							"    }",
+							"});",
+							"",
+							"//Описание json-схемы",
+							"var data = JSON.parse(responseBody);",
+							"",
+							"var schema = {",
+							"    //type of object",
+							"    \"type\": \"object\",",
+							"    //required properties",
+							"    \"required\": [\"people\", \"films\", \"species\", \"vehicles\", \"planets\", \"starships\"],",
+							"    //describe the properties",
+							"    \"properties\": {",
+							"        \"people\": {\"type\":\"string\"},",
+							"        \"planets\": {\"type\":\"string\"},",
+							"        \"films\": {\"type\":\"string\"},",
+							"        \"species\": {\"type\":\"string\"},",
+							"        \"vehicles\": {\"type\":\"string\"},",
+							"        \"starships\": {\"type\":\"string\"},",
+							"    }",
+							"};",
+							"",
+							"//Тест на валидацию схемы",
+							"pm.test(\"Body is correct\", function(){",
+							"    pm.expect(tv4.validate(data, schema)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://swapi.co/api/",
+					"protocol": "https",
+					"host": [
+						"swapi",
+						"co"
+					],
+					"path": [
+						"api",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Star Wars People",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dc7006fb-78d9-4548-89ec-3e43c5977437",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"",
+							"var schema = {",
+							"    \"type\": \"object\",",
+							"    \"required\": [\"name\", \"homeworld\", \"films\", \"species\", \"vehicles\", \"starships\"],",
+							"    \"propertis\": {",
+							"        \"name\": {\"type\": \"string\"},",
+							"        \"homeworld\": {\"type\": \"string\"},",
+							"        \"films\": {",
+							"            \"type\": \"array\",",
+							"            \"items\": {\"type\": \"string\"}",
+							"        },",
+							"        \"species\": {",
+							"            \"type\": \"array\",",
+							"            \"items\": {\"type\": \"string\"}",
+							"        },",
+							"        \"vehicles\": {",
+							"            \"type\": \"array\",",
+							"            \"items\": {\"type\": \"string\"}",
+							"        },",
+							"        \"starships\": {",
+							"            \"type\": \"array\",",
+							"            \"items\": {\"type\": \"string\"}",
+							"        },",
+							"    }",
+							"};",
+							"",
+							"pm.test(\"Body is correct\", function(){",
+							"    pm.expect(tv4.validate(data, schema)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://swapi.co/api/people/1",
+					"protocol": "https",
+					"host": [
+						"swapi",
+						"co"
+					],
+					"path": [
+						"api",
+						"people",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Basic Auth (username/password)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "postman",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://postman-echo.com/basic-auth",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"basic-auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Basic Auth  (base64)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "67bfcea6-9040-431a-b43d-57e92d9fecc6",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic cG9zdG1hbjpwYXNzd29yZA==",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://postman-echo.com/basic-auth",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"basic-auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Mock GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://f6b4cb3a-d6b8-4657-aaef-ea819704f234.mock.pstmn.io",
+					"protocol": "https",
+					"host": [
+						"f6b4cb3a-d6b8-4657-aaef-ea819704f234",
+						"mock",
+						"pstmn",
+						"io"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Test Mock",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://f6b4cb3a-d6b8-4657-aaef-ea819704f234.mock.pstmn.io",
+							"protocol": "https",
+							"host": [
+								"f6b4cb3a-d6b8-4657-aaef-ea819704f234",
+								"mock",
+								"pstmn",
+								"io"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 02 Nov 2019 15:13:21 GMT"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"af-GpPmRW0ySclCbQDmlVYDXw7rYA4\""
+						},
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "x-srv-span",
+							"value": "v=1;s=a5cd801a4cec2a89"
+						},
+						{
+							"key": "x-srv-trace",
+							"value": "v=1;t=460428fe291485bc"
+						},
+						{
+							"key": "Content-Length",
+							"value": "148"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": {\n        \"name\": \"Test\",\n        \"message\": \"Success\"\n    }\n}"
+				},
+				{
+					"name": "Test Mock",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"Ivan\"}"
+						},
+						"url": {
+							"raw": "https://f6b4cb3a-d6b8-4657-aaef-ea819704f234.mock.pstmn.io/action",
+							"protocol": "https",
+							"host": [
+								"f6b4cb3a-d6b8-4657-aaef-ea819704f234",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"action"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 02 Nov 2019 15:15:01 GMT"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"af-GpPmRW0ySclCbQDmlVYDXw7rYA4\""
+						},
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "x-srv-span",
+							"value": "v=1;s=a5cd801a4cec2a89"
+						},
+						{
+							"key": "x-srv-trace",
+							"value": "v=1;t=460428fe291485bc"
+						},
+						{
+							"key": "Content-Length",
+							"value": "73"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": {\n        \"name\": \"Ivan\",\n        \"status\": \"created\"\n        \"message\": \"Success\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Test Mock POST",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Ivan\"}"
+				},
+				"url": {
+					"raw": "https://f6b4cb3a-d6b8-4657-aaef-ea819704f234.mock.pstmn.io/action",
+					"protocol": "https",
+					"host": [
+						"f6b4cb3a-d6b8-4657-aaef-ea819704f234",
+						"mock",
+						"pstmn",
+						"io"
+					],
+					"path": [
+						"action"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Test Mock",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"Ivan\"}"
+						},
+						"url": {
+							"raw": "https://f6b4cb3a-d6b8-4657-aaef-ea819704f234.mock.pstmn.io/action",
+							"protocol": "https",
+							"host": [
+								"f6b4cb3a-d6b8-4657-aaef-ea819704f234",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"action"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 02 Nov 2019 15:15:01 GMT"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"af-GpPmRW0ySclCbQDmlVYDXw7rYA4\""
+						},
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "x-srv-span",
+							"value": "v=1;s=a5cd801a4cec2a89"
+						},
+						{
+							"key": "x-srv-trace",
+							"value": "v=1;t=460428fe291485bc"
+						},
+						{
+							"key": "Content-Length",
+							"value": "73"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": {\n        \"name\": \"Ivan\",\n        \"status\": \"created\"\n        \"message\": \"Success\"\n    }\n}"
+				},
+				{
+					"name": "Test Mock",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://f6b4cb3a-d6b8-4657-aaef-ea819704f234.mock.pstmn.io",
+							"protocol": "https",
+							"host": [
+								"f6b4cb3a-d6b8-4657-aaef-ea819704f234",
+								"mock",
+								"pstmn",
+								"io"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 02 Nov 2019 15:13:21 GMT"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"af-GpPmRW0ySclCbQDmlVYDXw7rYA4\""
+						},
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "x-srv-span",
+							"value": "v=1;s=a5cd801a4cec2a89"
+						},
+						{
+							"key": "x-srv-trace",
+							"value": "v=1;t=460428fe291485bc"
+						},
+						{
+							"key": "Content-Length",
+							"value": "148"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": {\n        \"name\": \"Test\",\n        \"message\": \"Success\"\n    }\n}"
+				}
+			]
+		}
+	],
+	"protocolProfileBehavior": {}
+}
